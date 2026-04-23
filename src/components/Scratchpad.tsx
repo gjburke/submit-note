@@ -3,7 +3,7 @@ import { Image, Send, LayoutList, ChevronDown, Hash } from 'lucide-react';
 
 export const Scratchpad: React.FC<{
   onLogout: () => void;
-}> = ({ onLogout }) => {
+}> = (/*{ onLogout }*/) => {
   const [text, setText] = useState('');
   const [tagsInput, setTagsInput] = useState('');
   const [tags, setTags] = useState<string[]>([]);

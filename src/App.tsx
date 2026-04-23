@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { AuthScreen } from './components/AuthScreen'
 import { Scratchpad } from './components/Scratchpad'
 import './index.css'

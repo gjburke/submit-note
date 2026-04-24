@@ -11,10 +11,11 @@ export const Scratchpad: React.FC = () => {
   const [text, setText] = useState('');
   const [tagsInput, setTagsInput] = useState('');
   const [tags, setTags] = useState<string[]>([]);
+  const [allTags, setAllTags] = useState<string[]>(DUMMY_ALL_TAGS);
   const [isRecentsOpen, setIsRecentsOpen] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const fuse = useMemo(() => new Fuse(DUMMY_ALL_TAGS, { threshold: 0.3 }), []);
+  const fuse = useMemo(() => new Fuse(allTags, { threshold: 0.3 }), [allTags]);
 
   const suggestedTags = tagsInput.trim()
     ? fuse.search(tagsInput)
@@ -55,6 +56,12 @@ export const Scratchpad: React.FC = () => {
     // In a real app, send text and tags to Supabase here
     console.log('Submitting:', { text, tags, timestamp: new Date() });
     
+    // Optimistic Tag Adding: Save any newly added tags to our global fuzzy pool
+    const newGlobalTags = tags.filter(t => !allTags.includes(t));
+    if (newGlobalTags.length > 0) {
+      setAllTags([...allTags, ...newGlobalTags]);
+    }
+
     // Clear the scratching pad instantly
     setText('');
     setTags([]);

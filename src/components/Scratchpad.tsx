@@ -99,8 +99,8 @@ export const Scratchpad: React.FC<{
         <button 
           className="btn-icon" 
           onClick={handleSubmit}
-          disabled={!text.trim() && tags.length === 0}
-          style={{ background: text.trim() || tags.length > 0 ? 'var(--accent)' : 'transparent', color: text.trim() || tags.length > 0 ? 'var(--app-bg)' : 'var(--text-secondary)' }}
+          disabled={!text.trim()}
+          style={{ background: text.trim() ? 'var(--accent)' : 'transparent', color: text.trim() ? 'var(--app-bg)' : 'var(--text-secondary)' }}
         >
           <Send size={18} />
         </button>

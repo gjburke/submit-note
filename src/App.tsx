@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="flex-1 flex w-full h-full">
       {isAuthenticated ? (
-        <Scratchpad onLogout={() => setIsAuthenticated(false)} />
+        <Scratchpad />
       ) : (
         <AuthScreen onLogin={() => setIsAuthenticated(true)} />
       )}

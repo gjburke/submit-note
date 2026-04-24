@@ -152,7 +152,6 @@ export const Scratchpad: React.FC = () => {
 
     setTags(activeTags);
     setIsRecentsOpen(false);
-    textareaRef.current?.focus();
   };
 
   const handleCancelReply = () => {
@@ -266,7 +265,17 @@ export const Scratchpad: React.FC = () => {
       />
 
       {/* Tag Input Area */}
-      <div className="tag-container relative" style={{ flexWrap: 'wrap' }}>
+      <div 
+        className="tag-container relative" 
+        style={{ flexWrap: 'wrap' }}
+        onClick={(e) => {
+          // Focus the tag input if the user clicks anywhere in the container,
+          // except if they are clicking an action button (like Send or Suggestion Pill)
+          if ((e.target as HTMLElement).tagName !== 'BUTTON') {
+            document.getElementById('tag-input')?.focus();
+          }
+        }}
+      >
         {/* Suggestion Bar */}
         {suggestedTags.length > 0 && (
           <div className="tag-suggestions-bar">

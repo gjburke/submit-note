@@ -51,6 +51,7 @@ export const Scratchpad: React.FC = () => {
   const [replyingToNote, setReplyingToNote] = useState<Note | null>(null);
   const [isRecentsOpen, setIsRecentsOpen] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const tagInputRef = useRef<HTMLInputElement>(null);
 
   const fuse = useMemo(() => new Fuse(allTags, { threshold: 0.3 }), [allTags]);
 
@@ -272,7 +273,7 @@ export const Scratchpad: React.FC = () => {
           // Focus the tag input if the user clicks anywhere in the container,
           // except if they are clicking an action button (like Send or Suggestion Pill)
           if ((e.target as HTMLElement).tagName !== 'BUTTON') {
-            document.getElementById('tag-input')?.focus();
+            tagInputRef.current?.focus();
           }
         }}
       >
@@ -286,7 +287,7 @@ export const Scratchpad: React.FC = () => {
                 onClick={() => {
                   setTags([...tags, t]);
                   setTagsInput('');
-                  textareaRef.current?.focus();
+                  tagInputRef.current?.focus();
                 }}
               >
                 #{t}
@@ -311,6 +312,7 @@ export const Scratchpad: React.FC = () => {
           }}
         >
           <input
+            ref={tagInputRef}
             id="tag-input"
             name="tags"
             autoComplete="off"

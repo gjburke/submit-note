@@ -252,6 +252,12 @@ export const Scratchpad: React.FC = () => {
 
       {/* Main Typing Area */}
       <textarea
+        id="text-input"
+        name="text"
+        autoComplete="on"
+        autoCorrect="on"
+        autoCapitalize="on"
+        spellCheck={true}
         ref={textareaRef}
         className="scratchpad-input"
         placeholder="Type a note..."
@@ -296,6 +302,9 @@ export const Scratchpad: React.FC = () => {
           }}
         >
           <input
+            id="tag-input"
+            name="tags"
+            autoComplete="off"
             type="text"
             className="tag-input"
             placeholder={tags.length === 0 ? 'Add tags... (Press Enter)' : ''}

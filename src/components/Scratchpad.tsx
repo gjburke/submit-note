@@ -1,9 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Image, Send, LayoutList, ChevronDown, Hash } from 'lucide-react';
 
-export const Scratchpad: React.FC<{
-  onLogout: () => void;
-}> = (/*{ onLogout }*/) => {
+export const Scratchpad: React.FC = () => {
   const [text, setText] = useState('');
   const [tagsInput, setTagsInput] = useState('');
   const [tags, setTags] = useState<string[]>([]);
@@ -50,7 +48,7 @@ export const Scratchpad: React.FC<{
   };
 
   const recents = [
-    { id: 1, text: "Idea for the new mobile MVP: Focus heavily on dark mode.", time: "10m ago" },
+    { id: 1, text: "Idea for the new mobile MVP: Focus heavily on dark mode. Lorem Ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", time: "10m ago" },
     { id: 2, text: "Grocery list: Milk, Eggs, Bread", time: "2h ago" },
     { id: 3, text: "Meeting notes: Supabase integration handles the auth beautifully.", time: "Yesterday" }
   ];

@@ -1,5 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { Image, Send, LayoutList, ChevronDown, Hash } from 'lucide-react';
+import Fuse from 'fuse.js';
+
+const DUMMY_ALL_TAGS = [
+  'idea', 'todo', 'meeting', 'grocery', 'work', 'project', 'urgent', 
+  'someday', 'finance', 'health', 'fitness', 'travel', 'recipes'
+];
 
 export const Scratchpad: React.FC = () => {
   const [text, setText] = useState('');
@@ -7,6 +13,15 @@ export const Scratchpad: React.FC = () => {
   const [tags, setTags] = useState<string[]>([]);
   const [isRecentsOpen, setIsRecentsOpen] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const fuse = useMemo(() => new Fuse(DUMMY_ALL_TAGS, { threshold: 0.3 }), []);
+
+  const suggestedTags = tagsInput.trim()
+    ? fuse.search(tagsInput)
+        .map(result => result.item)
+        .filter(t => !tags.includes(t))
+        .slice(0, 5)
+    : [];
 
   // Auto-focus on mount
   useEffect(() => {
@@ -78,7 +93,27 @@ export const Scratchpad: React.FC = () => {
       />
 
       {/* Tag Input Area */}
-      <div className="tag-container" style={{ flexWrap: 'wrap' }}>
+      <div className="tag-container relative" style={{ flexWrap: 'wrap' }}>
+        
+        {/* Suggestion Bar */}
+        {suggestedTags.length > 0 && (
+          <div className="tag-suggestions-bar">
+            {suggestedTags.map(t => (
+              <button 
+                key={t}
+                className="suggestion-pill"
+                onClick={() => {
+                  setTags([...tags, t]);
+                  setTagsInput('');
+                  textareaRef.current?.focus();
+                }}
+              >
+                #{t}
+              </button>
+            ))}
+          </div>
+        )}
+
         <Hash size={18} className="text-secondary" />
         {tags.map((tag) => (
           <span key={tag} className="tag-pill">

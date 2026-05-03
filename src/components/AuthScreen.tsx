@@ -1,5 +1,4 @@
 import React from 'react';
-import { Apple } from 'lucide-react';
 
 interface AuthScreenProps {
   onLogin: () => void;
@@ -31,28 +30,14 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLogin }) => {
             N
           </span>
         </div>
-        <h1 className="text-xl font-bold">Frictionless Notes</h1>
+        <h1 className="text-xl font-bold">Submit Notes</h1>
         <p className="text-secondary mt-2 text-sm">
           Sign in to sync your scratchpad.
         </p>
       </div>
 
-      <button className="btn-auth apple" onClick={onLogin}>
-        <Apple size={20} />
-        Continue with Apple
-      </button>
-
-      <button className="btn-auth google" onClick={onLogin}>
-        <span
-          style={{
-            width: 20,
-            height: 20,
-            background: '#eee',
-            borderRadius: '50%',
-            display: 'inline-block',
-          }}
-        ></span>
-        Continue with Google
+      <button className="btn-auth" onClick={onLogin}>
+        Continue with GitHub
       </button>
     </div>
   );

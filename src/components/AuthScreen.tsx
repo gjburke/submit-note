@@ -1,10 +1,17 @@
 import React from 'react';
+import { supabase } from './../supabaseClient';
 
-interface AuthScreenProps {
-  onLogin: () => void;
-}
+export const AuthScreen: React.FC = () => {
+  const handleLogin = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'github',
+    });
 
-export const AuthScreen: React.FC<AuthScreenProps> = ({ onLogin }) => {
+    if (error) {
+      console.error('Error logging in: ', error);
+    }
+  };
+
   return (
     <div
       className="flex flex-1 flex-col items-center justify-center"
@@ -36,7 +43,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLogin }) => {
         </p>
       </div>
 
-      <button className="btn-auth" onClick={onLogin}>
+      <button className="btn-auth" onClick={handleLogin}>
         Continue with GitHub
       </button>
     </div>

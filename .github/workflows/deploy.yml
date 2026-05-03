@@ -5,7 +5,7 @@ on:
     branches: ['main']
 
 env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true 
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 permissions:
   contents: read
@@ -29,6 +29,9 @@ jobs:
 
       - name: Build Project
         run: yarn build
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -36,7 +39,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist' 
+          path: './dist'
 
       - name: Deploy to GitHub Pages
         id: deployment

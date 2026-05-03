@@ -1,11 +1,17 @@
 import React from 'react';
-import { Apple } from 'lucide-react';
+import { supabase } from './../supabaseClient';
 
-interface AuthScreenProps {
-  onLogin: () => void;
-}
+export const AuthScreen: React.FC = () => {
+  const handleLogin = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'github',
+    });
 
-export const AuthScreen: React.FC<AuthScreenProps> = ({ onLogin }) => {
+    if (error) {
+      console.error('Error logging in: ', error);
+    }
+  };
+
   return (
     <div
       className="flex flex-1 flex-col items-center justify-center"
@@ -31,28 +37,14 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLogin }) => {
             N
           </span>
         </div>
-        <h1 className="text-xl font-bold">Frictionless Notes</h1>
+        <h1 className="text-xl font-bold">Submit Notes</h1>
         <p className="text-secondary mt-2 text-sm">
           Sign in to sync your scratchpad.
         </p>
       </div>
 
-      <button className="btn-auth apple" onClick={onLogin}>
-        <Apple size={20} />
-        Continue with Apple
-      </button>
-
-      <button className="btn-auth google" onClick={onLogin}>
-        <span
-          style={{
-            width: 20,
-            height: 20,
-            background: '#eee',
-            borderRadius: '50%',
-            display: 'inline-block',
-          }}
-        ></span>
-        Continue with Google
+      <button className="btn-auth" onClick={handleLogin}>
+        Continue with GitHub
       </button>
     </div>
   );
